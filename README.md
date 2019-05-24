@@ -38,7 +38,7 @@
 
 
 
-网站的效果:[http://22k-me.cn]()
+网站的效果:[http://22k-me.cn](http://22k-me.cn)
 
 
 
@@ -50,4 +50,9 @@
 
 2. ​	遇到在本地调试项目可以运行，但是打成war包之后却不能运行的。可以在我项目的主程序中查看下Application.java中的代码。(折腾一下午才知道这是SpringBoot的问题…….)
 
-   参考文章:[https://blog.csdn.net/qq_26684469/article/details/81475432](https://blog.csdn.net/qq_26684469/article/details/81475432)
+   参考文章:[https://blog.csdn.net/qq_26684469/article/details/81475432
+
+   ](https://blog.csdn.net/qq_26684469/article/details/81475432)
+
+
+
