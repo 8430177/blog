@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="~{fragments/header :: header}">
+    <meta charset="UTF-8">
+    <title>邮箱激活</title>
+
+</head>
+<body>
+
+<h2 style="color: red" th:if="${message} eq 'again'">用户已激活！！！</h2>
+<h2 style="color: red" th:if="${message} eq 'failure'">激活失败！！请返回个人中心设置重新发送激活邮件！！！</h2>
+<h2 style="color: red" th:if="${message} eq 'success'">激活成功！！</h2>
+</body>
+<div th:replace="~{fragments/footer :: footer}">...</div>
+</html>

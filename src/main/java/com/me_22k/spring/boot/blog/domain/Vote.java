@@ -2,7 +2,6 @@ package com.me_22k.spring.boot.blog.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+
 
 /**
  * Like 实体

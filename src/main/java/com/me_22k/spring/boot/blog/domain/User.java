@@ -29,7 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * User 实体
  * 
  */
-@Entity // 实体
+@Entity // 实体类
 public class User implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -62,9 +62,13 @@ public class User implements UserDetails, Serializable {
 	@Column(length = 200)
 	private String avatar; // 头像图片地址
 
+	@Column(length = 1)
+	private String status="0";//激活状态(0为未激活)
+	
+	
 	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_authority", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), 
-		inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+	inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
 	private List<Authority> authorities;
 
 	protected User() { // JPA 的规范要求无参构造函数；设为 protected 防止直接使用

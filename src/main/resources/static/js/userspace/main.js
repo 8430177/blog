@@ -1,9 +1,4 @@
-/*!
- * Avatar JS.
- * 
- * @since: 1.0.0 2017/4/6
- * @author Way Lau <https://me_22k.com>
- */
+
 "use strict";
 //# sourceURL=main.js
  
@@ -93,7 +88,28 @@ $(function() {
 		    }
 		})
 	});
- 
 
+	//发送激活邮箱的代码
+    $("#send_Email").click(function() {
+        var user=document.getElementById("username_22k");
+        $.ajax({
+            url:"/u/Email_act",
+            contentType : 'application/json',
+            data: {"username":user.innerText},
+            type: "get",
+            success: function (data) {
+                if (data=="success")
+                {
+                    toastr.success("激活邮箱验证码发送成功!请登录邮件查看并激活!!!");
+                }else {
+                    toastr.warning("当前用户邮箱已激活!!!");
+
+                }
+            },
+            error : function() {
+                toastr.error("error!");
+            }
+        });
+    });
 	 
 });

@@ -17,12 +17,11 @@
                 <div class="card-block">
                  	<h2 class="card-title">
                  		<span>
-		                  <a href="/u/me_22k" title="me_22k" th:href="'/u/' + ${blog.username}"  th:title="${blog.username}">
+		                  <a  th:href="'/u/' + ${blog.username}"  th:title="${blog.username}">
 		                    <img src="/images/avatar-defualt.jpg" th:src="${blog.avatar} == null ? '/images/avatar-defualt.jpg' : ${blog.avatar}"  class="blog-avatar-50">
 		                  </a>
 				        </span>
-                        <a href="/u/me_22k/blogs/1" class="card-link" title="me_22k" 
-                        	th:href="'/u/' + ${blog.username} + '/blogs/'+ ${blog.blogId}"  th:title="${blog.title}" th:text="${blog.title}">
+                        <a th:href="'/u/' + ${blog.username} + '/blogs/'+ ${blog.blogId}"  th:title="${blog.title}" th:text="${blog.title}">
                         </a>
                     </h2>
                     <p class="card-text" th:text="${blog.summary}"></p>
@@ -30,14 +29,13 @@
                         <a href="/u/me_22k" th:href="'/u/' + ${blog.username}" class="card-link" th:text=${blog.username}>me_22k</a> 
                         发表于 [[${#dates.format(blog.createTime, 'yyyy-MM-dd HH:mm')}]] <i class="fa fa-eye" aria-hidden="true">[[${blog.readSize}]]</i>
                         <i class="fa fa-heart-o" aria-hidden="true">[[${blog.voteSize}]]</i> <i class="fa fa-comment-o"
-                                                                              aria-hidden="true">[[${blog.commentSize}]]</i>
+                                 aria-hidden="true">[[${blog.commentSize}]]</i>
                     </div>
                 </div>
             </div>
             <div th:replace="~{fragments/page :: page}">...</div>
            </div>
             </div>
- 
         </div>
 
         <!-- 右侧栏目 -->
@@ -45,7 +43,7 @@
             <div>
                 <!-- 热门标签 -->
                 <div class="card ">
-                    <h5 class="card-header"><i class="fa fa-tags" aria-hidden="true"></i> 热门标签</h5>
+                    <h6 class="card-header"><i class="fa fa-tags" aria-hidden="true"></i> 热门标签</h6>
                     <div class="card-block">
                         <div class="row">
                             <div class="col-lg-12" >
@@ -58,7 +56,7 @@
 
                 <!-- 热门用户 -->
                 <div class="card my-4">
-                    <h5 class="card-header"><i class="fa fa-users" aria-hidden="true"></i> 热门用户</h5>
+                    <h6 class="card-header"><i class="fa fa-users" aria-hidden="true"></i> 热门用户</h6>
                     <div class="card-block">
                         <div class="row">
                             <div class="col-lg-12">
@@ -74,7 +72,7 @@
 
                 <!-- 热门文章 -->
                 <div class="card my-4">
-                    <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i> 热门文章</h5>
+                    <h6 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i> 热门文章</h6>
 
                     <ul class="list-group" th:each="hotblog , hotblogStat : ${hotest}" th:object="${hotblog}">
                         <a  th:href="'/u/'+*{username} +'/blogs/'+ *{blogId}" class="list-group-item">
@@ -86,7 +84,7 @@
 
                 <!-- 最新发布 -->
                 <div class="card my-4">
-                    <h5 class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i> 最新发布</h5>
+                    <h6 class="card-header"><i class="fa fa-line-chart" aria-hidden="true"></i> 最新发布</h6>
                     <div class="list-group">
                         <ul class="list-group" th:each="newblog : ${newest}" th:object="${newblog}">
                         <a  th:href="'/u/'+*{username} +'/blogs/'+ *{blogId}" class="list-group-item" th:text="*{title}">

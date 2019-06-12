@@ -20,15 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.me_22k.spring.boot.blog.domain.Authority;
 import com.me_22k.spring.boot.blog.domain.User;
 import com.me_22k.spring.boot.blog.service.AuthorityService;
 import com.me_22k.spring.boot.blog.service.UserService;
 import com.me_22k.spring.boot.blog.util.ConstraintViolationExceptionHandler;
 import com.me_22k.spring.boot.blog.vo.Response;
- 
-
 /**
  * 用户控制器.
  * 

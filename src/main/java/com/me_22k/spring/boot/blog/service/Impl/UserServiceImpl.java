@@ -69,14 +69,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return users;
 	}
 
+	//表单登录的验证
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userRepository.findByUsername(username);
 	}
 
+
 	@Override
 	public List<User> listUsersByUsernames(Collection<String> usernames) {
+
 		return userRepository.findByUsernameIn(usernames);
+	}
+
+	@Transactional
+	@Override
+	public void SaveStatus(String status,String email) {
+		userRepository.updateStatus(status,email);
 	}
 
 }

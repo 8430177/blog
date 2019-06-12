@@ -8,6 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.me_22k.spring.boot.blog.domain.User;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
+import javax.transaction.Transactional;
 
 /**
  * 用户仓库.
@@ -34,4 +38,18 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	 * @return
 	 */
 	List<User> findByUsernameIn(Collection<String> usernames);
+
+	/**
+	 * 查询邮箱激活状态码
+	 */
+	@Query(value = "SELECT status FROM user WHERE username =?",nativeQuery = true)
+	 String findByStatus(String username);
+
+	/**
+	 * 更改邮箱激活状态
+	 */
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query(value = "UPDATE user set status = ? WHERE email = ?",nativeQuery =true)
+	int updateStatus(String status,String email);
 }

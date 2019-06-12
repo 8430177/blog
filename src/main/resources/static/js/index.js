@@ -1,8 +1,6 @@
 /*!
  * index main JS.
- * 
- * @since: 1.0.0 2017/4/12
- * @author Way Lau <https://me_22k.com>
+ *
  */
 "use strict";
 //# sourceURL=index.js
@@ -11,6 +9,7 @@
 $(function() {
     
 	var _pageSize; // 存储用于搜索
+
 	
 	// 根据用户名、页面索引、页面大小获取用户列表
 	function getBlogsByName(pageIndex, pageSize) {
@@ -73,6 +72,7 @@ $(function() {
 		 // 清空搜索框内容
 		 $("#indexkeyword").val('');
 	});
- 
- 
+
+
+
 });

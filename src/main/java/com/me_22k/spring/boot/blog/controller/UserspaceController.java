@@ -2,8 +2,12 @@ package com.me_22k.spring.boot.blog.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolationException;
 
+import com.me_22k.spring.boot.blog.mail.MailService;
+import com.me_22k.spring.boot.blog.repository.UserRepository;
+import com.me_22k.spring.boot.blog.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,13 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.me_22k.spring.boot.blog.domain.Blog;
@@ -36,6 +34,8 @@ import com.me_22k.spring.boot.blog.service.CatalogService;
 import com.me_22k.spring.boot.blog.service.UserService;
 import com.me_22k.spring.boot.blog.util.ConstraintViolationExceptionHandler;
 import com.me_22k.spring.boot.blog.vo.Response;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 /**
  * 用户主页空间控制器.
@@ -44,6 +44,11 @@ import com.me_22k.spring.boot.blog.vo.Response;
 @Controller
 @RequestMapping("/u")
 public class UserspaceController {
+	@Autowired
+	private MailService mailService;
+	@Autowired
+	private TemplateEngine templateEngine;
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -55,6 +60,9 @@ public class UserspaceController {
 	
 	@Autowired
 	private CatalogService catalogService;
+
+	@Autowired
+	private UserRepository userRepository;
 	
 	
 	@GetMapping("/{username}")
@@ -98,7 +106,35 @@ public class UserspaceController {
 		userService.saveUser(originalUser);
 		return "redirect:/u/" + username + "/profile";
 	}
-	
+
+	/**
+	 * 用户激活邮箱
+	 */
+	@ResponseBody
+	@RequestMapping("/Email_act")
+	public String SendActEmail(@RequestParam String username, HttpSession Httpsession)
+	{
+		String status=userRepository.findByStatus(username);
+		User user=userRepository.findByUsername(username);
+		if ("1".equals(status))
+		{
+			return "failure";
+		}
+		//生成邮箱验证码
+		String validateCode = MD5Util.encodeToHex("me_22k"+user.getEmail() + user.getPassword());
+		String validateCodes=user.getEmail()+","+validateCode;
+		//将验证码存入Session中
+		Httpsession.setAttribute("validateCodes",validateCodes);
+
+		//创建邮件正文
+		Context context = new Context();
+		context.setVariable("validateCode", validateCode);
+		String emailContent = templateEngine.process("activate", context);
+		mailService.sendHtmlMail(user.getEmail(),"请激活你的邮箱！！！",emailContent);
+
+		return "success";
+	}
+
 	/**
 	 * 获取编辑头像的界面
 	 * @param username
@@ -183,7 +219,7 @@ public class UserspaceController {
 	public String getBlogById(@PathVariable("username") String username,@PathVariable("id") Long id, Model model) {
 		User principal = null;
 		Blog blog = blogService.getBlogById(id);
-		
+
 		// 每次读取，简单的可以认为阅读量增加1次
 		blogService.readingIncrease(id);
 
@@ -238,15 +274,24 @@ public class UserspaceController {
 	}
 	
 	/**
-	 * 获取新增博客的界面
+	 * 获取新增博客的界面（发帖）
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/{username}/blogs/edit")
 	public ModelAndView createBlog(@PathVariable("username") String username, Model model) {
+		//判断用户是否激活邮箱
+		String status=userRepository.findByStatus(username);
+		//0为没有激活邮箱(后端校验)
+		if ("0".equals(status))
+		{
+			model.addAttribute("status","0");
+			return new ModelAndView("redirect:/index");
+		}
 		User user = (User)userDetailsService.loadUserByUsername(username);
 		List<Catalog> catalogs = catalogService.listCatalogs(user);
-		
+		//用户已激活邮箱
+		model.addAttribute("status","1");
 		model.addAttribute("blog", new Blog(null, null, null));
 		model.addAttribute("catalogs", catalogs);
 		return new ModelAndView("/userspace/blogedit", "blogModel", model);

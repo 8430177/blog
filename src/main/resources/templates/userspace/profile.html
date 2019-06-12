@@ -9,7 +9,6 @@
 <div class="container blog-content-container">
 
     <div class="row">
-
         <!-- 左侧栏目 -->
         <div class="col-md-4 col-xl-3">
 
@@ -19,35 +18,23 @@
                     <a class="blog-edit-avatar" data-toggle="modal"
 								data-target="#flipFlop" role="button"
 								data-th-attr="userName=${userModel.user.username}">  
-								<img th:src="${userModel.user.avatar} == null ? '/images/avatar-defualt.jpg' : ${userModel.user.avatar}" class="blog-avatar blog-avatar-230">
-      
+								<img th:src="${userModel.user.avatar} == null ? '/images/avatar-defualt.jpg' : ${userModel.user.avatar}" 
+								class="blog-avatar blog-avatar-230">
 							</a>
- 
-                        
                       </a>
                     </span>
-
                 </div>
-
             </div>
- 
         </div>
         
-   
-
         <!-- 右侧栏目 -->
-
-
         <div class="col-md-8 col-xl-9">
- 
-
             <!-- 个人设置 -->
             <div class="card ">
- 				<h5 class="card-header"><i class="fa fa-cog" aria-hidden="true"></i> 个人设置</h5>
+ 				<h5 class="card-header"><i class="fa fa-cog" aria-hidden="true"></i>个人设置</h5>
                     <div class="card-block">
 						<form th:action="'/u/'+${userModel.user.username}+'/profile'" method="post" th:object="${userModel.user}" id="userForm">
 							<input type="hidden" name="id" id="userId" th:value="*{id}" >
-							
 							<div class="form-group ">
 								<label for="username" class="col-form-label">账号</label>
 								<input type="text" class="form-control" id="username" name="username"  th:value="*{username}" readonly="readonly">
@@ -55,7 +42,11 @@
 							</div>
 							<div class="form-group">
 								<label for="email" class="col-form-label">邮箱</label>
-								<input type="email" class="form-control" id="email" name="email" th:value="*{email}" maxlength="50" placeholder="请输入邮箱">
+
+								<input type="email" class="form-control" id="email" name="email"
+									   th:value="*{email}" maxlength="50" placeholder="请输入邮箱">
+
+
 							</div>
 							<div class="form-group">
 								<label for="name" class="col-form-label">姓名</label>
@@ -67,6 +58,9 @@
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary">保存</button>
+								<button type="button"
+										href="javascript:void(0)"
+										id="send_Email" class="btn btn-primary">激活邮箱</button>
 							</div>
 						</form>
                         
@@ -108,6 +102,5 @@
  
 <!-- JavaScript -->
 <script src="../../js/userspace/main.js" th:src="@{/js/userspace/main.js}"></script>
-
 </body>
 </html>

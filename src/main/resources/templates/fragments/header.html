@@ -27,15 +27,20 @@
     <link href="../../css/toastr.min.css" th:href="@{/css/toastr.min.css}" rel="stylesheet">
     <!-- jQuery image cropping plugin CSS -->
     <link href="../../css/cropbox.css" th:href="@{/css/cropbox.css}" rel="stylesheet">
-    <!-- Custom styles -->
+    <!--  自定义样式 -->
     <link href="../../css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- 登录注册样式 -->
+    <link href="../../css/login_register.css" th:href="@{/css/login_register.css}" rel="stylesheet">
+    <!-- 分页样式 -->
     <link href="../../css/thymeleaf-bootstrap-paginator.css" th:href="@{/css/thymeleaf-bootstrap-paginator.css}"
           rel="stylesheet">
     <link href="../../css/blog.css" th:href="@{/css/blog.css}" rel="stylesheet">
+    <!-- 表单验证 -->
+    <link href="../../css/bootstrapValidator.min.css" th:href="@{/css/bootstrapValidator.min.css}" rel="stylesheet">
 </head>
 <body>
-<!-- 网站名字点击效果样式 -->
 <style>
+/* 网站名字点击效果样式  */
 h5{
 	margin: 0;
 	padding: 0;
@@ -76,59 +81,80 @@ h5:hover span:nth-child(6)
 <nav class="navbar navbar-inverse bg-inverse navbar-toggleable-md">
  <div class="container">  <!-- container start -->
   
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-              data-target="#navbarsContainer" aria-controls="navbarsExampleContainer" aria-expanded="false"
-              aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-           
-      <a class="navbar-brand" href="/" th:href="@{/}">
+<!-- 网站LOGON -->      
+<a class="navbar-brand" href="/" th:href="@{/}">
 <h5>
 	<span>2</span><span></span>
 	<span>2k</span><span>day</span>
 	<span>me</span><span>Come on！</span>
 </h5>
-</a>
+</a> 
+<button class="navbar-toggler navbar-light" type="button" data-toggle="collapse"
+              data-target="#navbarsContainer" aria-controls="navbarsExampleContainer" aria-expanded="false"
+              aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+ 
 
-     <div class="collapse navbar-collapse" id="navbarsContainer">
+ <div class="collapse navbar-collapse" id="navbarsContainer">
+         
          <ul class="navbar-nav mr-auto">
+         
              <li class="nav-item">
-                 <a class="nav-link" href="javascript:void(0)" th:attr="url='/blogs?order=new'" >最新 <span class="sr-only">(current)</span></a>
+                 <a class="nav-link" href="javascript:void(0)" th:attr="url='/blogs?order=new'">
+                 最新 <span class="sr-only">(current)</span></a>
              </li>
-             <li class="nav-item">
-                 <a class="nav-link" href="javascript:void(0)" th:attr="url='/blogs?order=hot'">最热</a>
-             </li>
-             <form class="form-inline mt-2 mt-md-0">
-                 <input class="form-control mr-sm-2" type="text" placeholder="搜索" id="indexkeyword" th:value="${keyword}">
-                 <a href="javascript:void(0)" class="btn btn-outline-secondary my-2 my-sm-0" id="indexsearch"><i class="fa fa-search"
-                   aria-hidden="true"></i></a>
-             </form>
-
-         </ul>
-         <div sec:authorize="isAuthenticated()"  class="row" >
-	<div class="dropdown">
-		<a class=" dropdown-toggle" href="/u/me_22k" th:href="@{'/u/' + ${#authentication.name}}" data-toggle="dropdown"><span sec:authentication="name"></span></a>
-		<div class="dropdown-menu" >
-			<a class=" dropdown-item" href="/u/me_22k" th:href="@{'/u/' + ${#authentication.name}}">个人主页</a> 
-			<a class="dropdown-item" href="/u/me_22k/profile" th:href="@{'/u/' + ${#authentication.name}} + '/profile'" >个人设置</a>
-		</div>
-	</div>
-		<div>
-			<a href="/u/me_22k/blogs/edit" th:href="'/u/' + ${#authentication.name} + '/blogs/edit'" class="btn btn-outline-success my-2 my-sm-0">写博客</a>
-		</div>
              
+             <li class="nav-item">
+                 <a class="nav-link" href="javascript:void(0)" th:attr="url='/blogs?order=hot'">
+                 最热</a>
+             </li>
+             <!-- 搜索框 -->
+           	 <form class="form-inline mt-2 mt-md-0">
+                 <input class="form-control  mr-sm-2" type="text" placeholder="搜索" id="indexkeyword" th:value="${keyword}">
+                 <a href="javascript:void(0)" class="btn btn-outline-secondary my-2 my-sm-0" id="indexsearch">
+                 <i class="fa fa-search" aria-hidden="true"></i></a>
+             </form>
+         </ul>
+         <!-- 用户登录后模块 -->
+        <div sec:authorize="isAuthenticated()"  class="form-inline" >
+         <div class="btn-group open dropdown">
+		  <a class="btn btn-primary" th:href="@{'/u/' + ${#authentication.name}}" data-toggle="dropdown">
+		  <i class="fa fa-user fa-fw"></i><span id="username_22k" sec:authentication="name"></span>
+		  <span class="fa fa-caret-down"></span></a>
+		  <ul class="dropdown-menu">
+		    <li><a class=" dropdown-item"  th:href="@{'/u/' + ${#authentication.name}}">
+				<i class="fa fa-home fa-fw"></i>个人主页</a></li>
+		    <li><a class="dropdown-item"  th:href="@{'/u/' + ${#authentication.name}} + '/profile'" >
+				<i class="fa fa-cog fa-fw"></i>个人设置</a></li>
+		  	</ul>
+			</div>
+		
+		
+		<div class="form-inline">
+		<div>
+			<!--<a  th:href="'/u/' + ${#authentication.name} + '/blogs/edit'"-->
+                <!--class="btn btn-outline-success my-2 my-sm-0">发帖</a>-->
+
+            <a  href="javascript:void(0)"
+                id="fatie"  class="btn btn-outline-success my-2 my-sm-0">发帖</a>
+        </div>
+
+
 	<form action="/logout" th:action="@{/logout}" method="post">
 		<input class="btn btn-outline-success " type="submit" value="退出">
 	</form>
-         </div>
+         </div> 
+	</div><!-- 模块结束 -->
 
+		<!-- 为空显示用户登录注册按钮 -->
          <div sec:authorize="isAnonymous()">
-             <a href="/login" class="btn btn-outline-success my-2 my-sm-0" type="submit">登录</a>
-             <a href="/register" class="btn btn-outline-success my-2 my-sm-0" type="submit">注册</a>
+             <a href="/login" class="btn btn-outline-info my-2 my-sm-0"  type="submit">登录</a>
+             <a href="/register" class="btn btn-outline-info my-2 my-sm-0" type="submit">注册</a>
          </div>
-
       </div>
     </div> <!-- container end -->
+
 </nav>
 </body>
 </html>

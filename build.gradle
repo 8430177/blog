@@ -30,10 +30,9 @@ buildscript {
 
 // 使用插件
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
-
 
 version = '1.0.0'
 
@@ -87,5 +86,10 @@ dependencies {
 	// 该依赖对于编译测试是必须的，默认包含编译产品依赖和编译时依
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	
+	//添加redis
+	//compile('org.springframework.boot:spring-boot-starter-data-redis')
+	
+	//添加发送邮件的依赖
+	compile('org.springframework.boot:spring-boot-starter-mail')
 
 }

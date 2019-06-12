@@ -68,4 +68,9 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> listUsersByUsernames(Collection<String> usernames);
+
+	/**
+	 * 更改邮箱验证状态
+	 */
+	void SaveStatus(String status,String email);
 }

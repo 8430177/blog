@@ -1,9 +1,4 @@
-/*!
- * blogedit.html 页面脚本.
- * 
- * @since: 1.0.0 2017-03-26
- * @author Way Lau <https://me_22k.com>
- */
+
 "use strict";
 //# sourceURL=blogedit.js
 
