@@ -3,9 +3,13 @@ package com.me_22k.spring.boot.blog.service.Impl;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,12 +25,14 @@ import com.me_22k.spring.boot.blog.service.UserService;
  * User 服务.
  * 
  */
+@CacheConfig(cacheNames = "userService")
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
+
 	@Transactional
 	@Override
 	public User saveUser(User user) {
@@ -44,23 +50,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public void removeUsersInBatch(List<User> users) {
 		userRepository.deleteInBatch(users);
 	}
-	
+
 	@Transactional
 	@Override
 	public User updateUser(User user) {
 		return userRepository.save(user);
 	}
 
+
 	@Override
 	public User getUserById(Long id) {
 		return userRepository.getOne(id);
 	}
 
+	@Cacheable(value = "listUsers",keyGenerator="UserKeyGenerator")
 	@Override
 	public List<User> listUsers() {
 		return userRepository.findAll();
 	}
 
+	@Cacheable(value = "listUsersByNameLike",keyGenerator="UserKeyGenerator")
 	@Override
 	public Page<User> listUsersByNameLike(String name, Pageable pageable) {
 		// 模糊查询
@@ -74,6 +83,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userRepository.findByUsername(username);
 	}
+
 
 
 	@Override

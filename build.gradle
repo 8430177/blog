@@ -87,7 +87,7 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	
 	//添加redis
-	//compile('org.springframework.boot:spring-boot-starter-data-redis')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
 	
 	//添加发送邮件的依赖
 	compile('org.springframework.boot:spring-boot-starter-mail')

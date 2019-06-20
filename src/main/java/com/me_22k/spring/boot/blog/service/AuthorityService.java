@@ -16,4 +16,5 @@ public interface AuthorityService {
 	 * @return
 	 */
 	Authority getAuthorityById(Long id);
+
 }

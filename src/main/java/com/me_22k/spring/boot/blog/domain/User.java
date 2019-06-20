@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,6 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class User implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	
 	@Id // 主键
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 自增长策略
@@ -172,7 +174,14 @@ public class User implements UserDetails, Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("User[id=%d, username='%s', name='%s', email='%s', password='%s']", id, username, name, email,
-				password);
+		return "User{" +
+				", id=" + id +
+				", username='" + username + '\'' +
+				", email='" + email + '\'' +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				'}';
 	}
+
+
 }

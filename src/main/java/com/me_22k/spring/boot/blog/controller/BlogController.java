@@ -3,6 +3,8 @@ package com.me_22k.spring.boot.blog.controller;
 import java.util.List;
 
 import com.me_22k.spring.boot.blog.repository.UserRepository;
+import com.me_22k.spring.boot.blog.service.Impl.UserServiceImpl;
+import com.me_22k.spring.boot.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +35,9 @@ public class BlogController {
 	private EsBlogService esBlogService;
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UserService userService;
 
 	@GetMapping
 	public String listEsBlogs(
@@ -132,5 +137,12 @@ public class BlogController {
 		return "act";
 	}
 
+
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public String findOne() {
+		List<User> users = userService.listUsers();
+		System.out.println(users);
+		return "blogs";
+	}
 
 }
